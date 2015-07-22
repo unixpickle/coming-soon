@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Pentagons</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+    body {
+      background-color: #65bcd4;
+      font-family: 'Lato', sans-serif;
+    }
+    #container {
+      display: table;
+      position: absolute;
+      top: calc(50% - 130px);
+      left: calc(50% - 210px);
+    }
+    h1 {
+      display: table-cell;
+      vertical-align: middle;
+      width: 420px;
+      height: 260px;
+      text-align: center;
+      color: #65bcd4;
+      font-weight: 300;
+      font-size: 70px;
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>COMING<br>SOON</h1>
+    </div>
+    <!--
+      Compiled from 
+      https://github.com/unixpickle/pentagons/tree/0892f69f925ad8e1e95c1e550294c1b4d7ac456d
+    -->
+    <script type="text/javascript">
+    !function(){function t(t,a,n){this._startInfo=t,this._endInfo=a,this._startEndDifference=e.difference(a,t),this._duration=n,this._startTime=i(),this._lastFrameTime=this._startTime,this._isDone=!1}function i(){return(new Date).getTime()}function e(t){this.x=t.x,this.y=t.y,this.radius=t.radius,this.rotation=t.rotation,this.opacity=t.opacity}function a(){var i=new e({radius:o(),opacity:h(),x:Math.random(),y:Math.random(),rotation:Math.random()*Math.PI*2});this._currentAnimation=new t(i,i,1),this._lastFrame=i}function n(){for(var t=0;l>t;++t)a.allPentagons.push(new a)}function r(){return 3e4+3e4*Math.random()}function h(){return.22*Math.random()+.02}function o(){return.05+.075*(Math.pow(Math.random(),15)+1)}function s(){this._canvas=document.createElement("canvas"),this._element=document.getElementById(p),this._element||(this._element=document.createElement("div"),this._element.id=p,document.body.insertBefore(this._element,document.body.childNodes[0]||null)),c(this._element),c(this._canvas),this._element.appendChild(this._canvas),this._width=0,this._height=0,this._updateSize(),window.addEventListener("resize",this._handleResize.bind(this))}function d(){s.call(this),this.start()}function _(){s.call(this),this._imageSize=0,this._imageCache={},this.start()}function c(t){t.style.position="fixed",t.style.top=0,t.style.left=0,t.style.width="100%",t.style.height="100%"}var m=500,u=50;t.prototype.frame=function(){if(0===this._duration)return this._isDone=!0,this._endInfo;var t=this._elapsed()/this._duration;return t>=1?(this._isDone=!0,this._endInfo):e.sum(this._startEndDifference.scaled(t),this._startInfo)},t.prototype.isDone=function(){return this._isDone},t.prototype._elapsed=function(){var t=i();return t<this._lastFrameTime?this._startTime=t:this._lastFrameTime+m<=t&&(this._startTime+=t-this._lastFrameTime-u),this._lastFrameTime=t,Math.max(t-this._startTime,0)},window.addEventListener("load",function(){n(),-1!==navigator.userAgent.indexOf("Firefox")?new d:new _}),e.difference=function(t,i){return e.sum(t,i.scaled(-1))},e.distanceSquared=function(t,i){return Math.pow(t.x-i.x,2)+Math.pow(t.y-i.y,2)},e.sum=function(t,i){return new e({x:t.x+i.x,y:t.y+i.y,radius:t.radius+i.radius,rotation:t.rotation+i.rotation,opacity:t.opacity+i.opacity})},e.prototype.clampedAngle=function(){var t=this.rotation%(2*Math.PI);0>t&&(t+=2*Math.PI);var i=new e(this);return i.rotation=t,i},e.prototype.scaled=function(t){return new e({x:this.x*t,y:this.y*t,radius:this.radius*t,rotation:this.rotation*t,opacity:this.opacity*t})};var l=18;a.MAX_RADIUS=.2,a.allPentagons=[],a.prototype.frame=function(){var t=this._currentAnimation.frame().clampedAngle();return this._lastFrame=t,this._currentAnimation.isDone()&&this._generateNewAnimation(),t},a.prototype._generateNewAnimation=function(){var i=new e({x:this._gravityCoord("x"),y:this._gravityCoord("y"),radius:o(),opacity:h(),rotation:Math.PI*(Math.random()-.5)+this._lastFrame.rotation});this._currentAnimation=new t(this._lastFrame,i,r())},a.prototype._gravityCoord=function(t){for(var i=this._lastFrame[t],n=1/Math.pow(i+.01,2)-1/Math.pow(1.01-i,2),r=0,h=a.allPentagons.length;h>r;++r){var o=a.allPentagons[r];if(o!==this){var s=e.distanceSquared(this._lastFrame,o._lastFrame);if(Math.abs(s)<1e-5)return Math.random();var d=1/s,_=Math.sqrt(s);n-=d*(o._lastFrame[t]-i)/_}}return n+=20*(Math.random()-.5),n=Math.max(Math.min(n,100),-100)/500,Math.max(Math.min(i+n,1),0)};var p="pentagon-background";s.prototype.draw=function(){throw new Error("override this in a subclass")},s.prototype.start=function(){this._tick()},s.prototype._handleResize=function(){this._updateSize(),this.draw()},s.prototype._requestAnimationFrame=function(){setTimeout(this._tick.bind(this),1e3/24)},s.prototype._tick=function(){this.draw(),this._requestAnimationFrame()},s.prototype._updateSize=function(){this._width=window.innerWidth,this._height=window.innerHeight,this._canvas.width=this._width,this._canvas.height=this._height},d.prototype=Object.create(s.prototype),d.prototype.draw=function(){var t=this._canvas.getContext("2d");t.clearRect(0,0,this._width,this._height);var i=Math.max(this._width,this._height),e=0,n=0;this._width<this._height?e=-(this._height-this._width)/2:n=-(this._width-this._height)/2;for(var r=0,h=a.allPentagons.length;h>r;++r){var o=a.allPentagons[r].frame(),s=o.x*i+e,d=o.y*i+n,_=i*o.radius;t.fillStyle="rgba(255, 255, 255,"+o.opacity.toPrecision(5)+")",t.beginPath();for(var c=0;5>c;++c){var m=Math.cos(o.rotation+c*Math.PI*2/5)*_+s,u=Math.sin(o.rotation+c*Math.PI*2/5)*_+d;0===c?t.moveTo(m,u):t.lineTo(m,u)}t.closePath(),t.fill()}},_.prototype=Object.create(s.prototype),_.prototype.draw=function(){var t=this._pentagonImage(),i=this._canvas.getContext("2d");i.clearRect(0,0,this._width,this._height);var e=Math.max(this._width,this._height),n=0,r=0;this._width<this._height?n=-(this._height-this._width)/2:r=-(this._width-this._height)/2;for(var h=0,o=a.allPentagons.length;o>h;++h){var s=a.allPentagons[h].frame(),d=s.x*e+n,_=s.y*e+r,c=e*s.radius;i.globalAlpha=s.opacity,i.translate(d,_),i.rotate(s.rotation),i.drawImage(t,-c,-c,2*c,2*c),i.rotate(-s.rotation),i.translate(-d,-_)}},_.prototype._pentagonImage=function(){this._updateImageSize();var t=this._imageSize;if(this._imageCache.hasOwnProperty(""+t))return this._imageCache[""+t];var i=document.createElement("canvas");i.width=t,i.height=t;var e=i.getContext("2d");e.fillStyle="white",e.beginPath();for(var a=0;360>a;a+=72){var n=Math.cos(a*Math.PI/180)*t/2+t/2,r=Math.sin(a*Math.PI/180)*t/2+t/2;0===a?e.moveTo(n,r):e.lineTo(n,r)}e.closePath(),e.fill();var h=document.createElement("img");return h.src=i.toDataURL("image/png"),this._imageCache[""+t]=h,h},_.prototype._updateImageSize=function(){var t=Math.max(this._width,this._height)*a.MAX_RADIUS,i=Math.ceil(Math.log(t)/Math.log(2)),e=Math.pow(2,1+i);e!==this._imageSize&&(this._imageSize=e)}}();
+    </script>
+  </body>
+</html>
